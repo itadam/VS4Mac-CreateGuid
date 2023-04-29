@@ -1,4 +1,4 @@
-## Create Guid Extension for VS for Mac
+## Create Guid Extension for VS for Mac 2022
 
 ### Preview
 ![Tools Menu](/Images/1.png)
