@@ -18,6 +18,6 @@
     </Extension>
     
     <Extension path="/MonoDevelop/Ide/MainMenu/Tools">
-        <CommandItem id="VisualStudioMac.CreateGuid.Commands.CreateGuidCommand" insertafter= "ToolsSection" />
+        <CommandItem id="VisualStudioMac.CreateGuid.Commands.CreateGuidCommand" />
     </Extension>
 </Addin>
