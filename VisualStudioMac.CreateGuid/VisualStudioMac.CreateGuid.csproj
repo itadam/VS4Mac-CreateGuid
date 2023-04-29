@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>.\bin</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudioMac.Sdk" Version="$(VisualStudioMacSdkNuGetVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AddinReference Include="MonoDevelop.DesignerSupport" />
+    <AddinReference Include="MonoDevelop.MacPlatform" />
+    <AddinReference Include="MonoDevelop.MonoMac" />
+    <AddinReference Include="MonoDevelop.DotNetCore" />
+  </ItemGroup>
+
+</Project>
