@@ -28,11 +28,15 @@ namespace VisualStudioMac.CreateGuid
         private void BuildDialog()
 		{
 
+			var mainBox = new VBox();
+
 			var hbox1 = new HBox();
 
-			var vbox1 = new VBox();
+            var leftVbox = new VBox();
 
-			var instructionsText = GettextCatalog.GetString("InstructionsText");
+            #region Instruction text label
+
+            var instructionsText = GettextCatalog.GetString("InstructionsText");
 
 			if (string.IsNullOrWhiteSpace(instructionsText) || "InstructionsText".Equals(instructionsText))
 			{
@@ -46,14 +50,18 @@ namespace VisualStudioMac.CreateGuid
             instructionsLabel.WidthRequest = 320;
 			instructionsLabel.Text = instructionsText;
             instructionsLabel.Wrap = WrapMode.Word;
-			vbox1.PackStart(instructionsLabel);
+            leftVbox.PackStart(instructionsLabel);
 
-			var frameBox1 = new FrameBox();
+            #endregion
+
+            #region GUID Format selection
+
+            var frameBox1 = new FrameBox();
             frameBox1.BorderColor = new Xwt.Drawing.Color(211, 211, 211);
             frameBox1.MarginTop = 5;
 
             var frame1 = new Frame();
-			frame1.Label = GettextCatalog.GetString("GUID Format");
+            frame1.Label = GettextCatalog.GetString("GUID Format");
 
             if (radioButtonGroup1 == null)
             {
@@ -115,6 +123,7 @@ namespace VisualStudioMac.CreateGuid
                 radioButton7.Name = nameof(radioButton7);
                 radioButton7.Label = GettextCatalog.GetString("7. const string GUID = \"...\";");
                 radioButton7.Group = radioButtonGroup1;
+                radioButton7.MarginTop = 20;
             }
 
             if (radioButton8 == null)
@@ -127,7 +136,7 @@ namespace VisualStudioMac.CreateGuid
 
             var vbox3 = new VBox();
 
-			vbox3.PackStart(radioButton1);
+            vbox3.PackStart(radioButton1);
             vbox3.PackStart(radioButton2);
             vbox3.PackStart(radioButton3);
             vbox3.PackStart(radioButton4);
@@ -141,11 +150,46 @@ namespace VisualStudioMac.CreateGuid
 
             frameBox1.Content = frame1;
 
-            vbox1.PackStart(frameBox1);
+            leftVbox.PackStart(frameBox1);
+
+            #endregion
+
+            hbox1.PackStart(leftVbox);
+
+            #region Buttons
+
+            var rightVbox = new VBox();
+
+            var copyButton = new Button();
+            copyButton.Name = nameof(copyButton);
+            copyButton.Label = GettextCatalog.GetString("Copy");
+            copyButton.Clicked += CopyButton_Clicked;
+            rightVbox.PackStart(copyButton);
+
+            var newGuidButton = new Button();
+            newGuidButton.Name = nameof(newGuidButton);
+            newGuidButton.Label = GettextCatalog.GetString("New GUID");
+            newGuidButton.Clicked += NewGuidButton_Clicked;
+            rightVbox.PackStart(newGuidButton);
+
+            var exitButton = new Button();
+            exitButton.Name = nameof(exitButton);
+            exitButton.Label = GettextCatalog.GetString("Exit");
+            exitButton.Clicked += ExitButton_Clicked;
+            rightVbox.PackStart(exitButton);
+
+            hbox1.PackEnd(rightVbox);
+
+            #endregion
+
+            mainBox.PackStart(hbox1);
+
+            #region Result label
 
             var frameBox2 = new FrameBox();
             frameBox2.BorderColor = new Xwt.Drawing.Color(211, 211, 211);
             frameBox2.MarginTop = 5;
+            frameBox2.MinHeight = 100;
 
             var frame2 = new Frame();
             frame2.Label = GettextCatalog.GetString("Result");
@@ -175,35 +219,13 @@ namespace VisualStudioMac.CreateGuid
 
             frameBox2.Content = frame2;
 
-            vbox1.PackEnd(frameBox2);
+            mainBox.PackEnd(frameBox2);
 
-            hbox1.PackStart(vbox1);
+            #endregion
 
-            var vbox2 = new VBox();
-
-            var copyButton = new Button();
-            copyButton.Name = nameof(copyButton);
-            copyButton.Label = GettextCatalog.GetString("Copy");
-            copyButton.Clicked += CopyButton_Clicked;
-            vbox2.PackStart(copyButton);
-
-            var newGuidButton = new Button();
-            newGuidButton.Name = nameof(newGuidButton);
-            newGuidButton.Label = GettextCatalog.GetString("New GUID");
-            newGuidButton.Clicked += NewGuidButton_Clicked;
-            vbox2.PackStart(newGuidButton);
-
-            var exitButton = new Button();
-            exitButton.Name = nameof(exitButton);
-            exitButton.Label = GettextCatalog.GetString("Exit");
-            exitButton.Clicked += ExitButton_Clicked;
-            vbox2.PackStart(exitButton);
-
-            hbox1.PackEnd(vbox2);
-
-			this.Content = hbox1;
-			this.Height = 380;
-			this.Width = 420;
+            this.Content = mainBox;
+			this.Height = 460;
+			this.Width = 440;
 			this.Title = GettextCatalog.GetString("Create GUID");
             this.Resizable = false;
             this.ShowInTaskbar = false;
